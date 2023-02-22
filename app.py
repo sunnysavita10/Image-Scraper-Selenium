@@ -47,14 +47,15 @@ def index():
                             # download each image and save it to the specified directory
                     del image_tags[0]
                     img_data=[]
-                    for image_tag in image_tags:
+                    for index,image_tag in enumerate(image_tags):
                                 # get the image source URL
                                 image_url = image_tag['src']
                                 #print(image_url)
                                 
                                 # send a request to the image URL and save the image
                                 image_data = requests.get(image_url).content
-                                img_data.append(image_data)
+                                mydict={"Index":index,"Image":image_data}
+                                img_data.append(my_dict)
                                 with open(os.path.join(save_directory, f"{query}_{image_tags.index(image_tag)}.jpg"), "wb") as f:
                                     f.write(image_data)
                     client = pymongo.MongoClient("mongodb+srv://pwskills:pwskills@cluster0.ln0bt5m.mongodb.net/?retryWrites=true&w=majority")
